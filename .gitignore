@@ -1,0 +1,7 @@
+# ignore executables
+*
+!*/
+!*.*
+
+# ignore object files
+*.o
