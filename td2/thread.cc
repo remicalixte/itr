@@ -1,3 +1,4 @@
+#include <libtime.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -5,7 +6,6 @@
 #include <time.h>
 #include <unistd.h>
 
-#include <libtime.hh>
 #include <string>
 
 using namespace std;

@@ -1,4 +1,4 @@
-#include "libtime.hh"
+#include "libtime.h"
 
 double timespec_to_ms(const timespec& time_ts) {
     double time_ms = 0;

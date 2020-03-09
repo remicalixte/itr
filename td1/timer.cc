@@ -1,4 +1,4 @@
-#include "timer.hh"
+#include "timer.h"
 
 #include <assert.h>
 #include <limits.h>
@@ -11,7 +11,7 @@
 #include <iostream>
 #include <string>
 
-#include "libtime.hh"
+#include "libtime.h"
 
 using namespace std;
 
