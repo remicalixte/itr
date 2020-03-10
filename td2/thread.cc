@@ -76,6 +76,7 @@ int main(int argc, char const* argv[]) {
     call_incr_arg args = {
         nLoops : nLoops,
         pCounter : &counter,
+        mutex : {},
         protect : protect,
     };
     pthread_mutex_init(&args.mutex, nullptr);
