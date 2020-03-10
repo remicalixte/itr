@@ -5,7 +5,6 @@ class Chrono {
    private:
     timespec startTime_;
     timespec stopTime_;
-    bool isActive_;
 
    public:
     Chrono(/* args */);

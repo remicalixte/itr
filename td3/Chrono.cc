@@ -1,7 +1,7 @@
 #include "Chrono.h"
 
 Chrono::Chrono() {
-    startTime_ = timespec_now();
+    restart();
 }
 
 Chrono::~Chrono() {
@@ -9,16 +9,15 @@ Chrono::~Chrono() {
 
 void Chrono::stop() {
     stopTime_ = timespec_now();
-    isActive_ = false;
 }
 
 void Chrono::restart() {
     startTime_ = timespec_now();
-    isActive_ = true;
+    stopTime_ = timespec_from_ms(0);
 }
 
 bool Chrono::isActive() {
-    return isActive_;
+    return stopTime_ == timespec_from_ms(0);
 }
 
 double Chrono::startTime() {
@@ -31,7 +30,7 @@ double Chrono::stopTime() {
 
 double Chrono::lap() {
     timespec time = stopTime_;
-    if (isActive_) {
+    if (stopTime_ == timespec_from_ms(0)) {
         time = startTime_;
     }
     return timespec_to_ms(timespec_now() - time);
