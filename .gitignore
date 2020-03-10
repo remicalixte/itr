@@ -5,3 +5,6 @@
 
 # ignore object files
 *.o
+
+# ignore .vscode again due to rule ignoring executables
+.vscode
