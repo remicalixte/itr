@@ -1,3 +1,4 @@
+#include <exception>
 #include <iostream>
 
 #include "libtime.h"
@@ -6,10 +7,9 @@
 class Mutex {
    public:
     class Monitor {
-       private:
-        class TimeoutException {};
-
        public:
+        class TimeoutException : public std::exception {};
+
         Monitor(Mutex &m);
         void wait();
         bool wait(double timeout_ms);
@@ -38,7 +38,7 @@ class Mutex {
     pthread_cond_t posixCondId;
 
     void lock();
-    void lock(double timeout_ms);
+    bool lock(double timeout_ms);
     bool trylock();
     void unlock();
 };

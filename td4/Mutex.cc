@@ -20,9 +20,9 @@ void Mutex::lock() {
     pthread_mutex_lock(&posixId);
 }
 
-void Mutex::lock(double timeout_ms) {
+bool Mutex::lock(double timeout_ms) {
     auto deadline = timespec_now() + timespec_from_ms(timeout_ms);
-    pthread_mutex_timedlock(&posixId, &deadline);
+    return pthread_mutex_timedlock(&posixId, &deadline) == 0;
 }
 
 bool Mutex::trylock() {
@@ -59,7 +59,9 @@ Mutex::Lock::Lock(Mutex &m) : Mutex::Monitor(m) {
 }
 
 Mutex::Lock::Lock(Mutex &m, double timeout_ms) : Mutex::Monitor(m) {
-    mutex.lock(timeout_ms);
+    if (!mutex.lock(timeout_ms)) {
+        throw Mutex::Monitor::TimeoutException();
+    }
 }
 
 Mutex::Lock::~Lock() {
@@ -68,7 +70,9 @@ Mutex::Lock::~Lock() {
 }
 
 Mutex::TryLock::TryLock(Mutex &m) : Mutex::Monitor(m) {
-    mutex.trylock();
+    if (!mutex.trylock()) {
+        throw Mutex::Monitor::TimeoutException();
+    }
 }
 
 Mutex::TryLock::~TryLock() {
