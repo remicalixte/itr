@@ -1,17 +1,20 @@
 #include <unistd.h>
 
+#include "Mutex.h"
 #include "PosixThread.h"
 
 class Thread : public PosixThread {
    private:
     timespec startTime;
     timespec stopTime;
+    bool started;
+    Mutex startedMu;
 
    public:
     Thread(/* args */);
     ~Thread();
-    void start();
-    virtual void run();
+    bool start();
+    virtual void run() = 0;
     static void* call_run(void* v_thread);
     static void sleep_ms(double delay_ms);
     double startTime_ms();

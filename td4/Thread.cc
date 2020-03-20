@@ -10,22 +10,23 @@ Thread::Thread(/* args */) : PosixThread() {
 Thread::~Thread() {
 }
 
-void Thread::start() {
-    PosixThread::start(call_run, this);
+bool Thread::start() {
+    auto lock = Mutex::Lock(startedMu);
+    if (started) {
+        return false;
+    }
     startTime = timespec_now();
-}
-
-void Thread::run() {
-    std::cout << "base run called\n";
+    PosixThread::start(call_run, this);
+    return true;
 }
 
 void* Thread::call_run(void* v_thread) {
-    std::cout << "in call_run " << v_thread << std::endl;
     auto thread = (Thread*)v_thread;
-    std::cout << "cast to thread\n";
     thread->run();
 
     thread->stopTime = timespec_now();
+    auto lock = Mutex::Lock(thread->startedMu);
+    thread->started = false;
 
     return nullptr;
 }
