@@ -6,17 +6,14 @@
 
 using namespace std;
 int main() {
-    volatile double counter;
+    volatile double counter = 0;
     int n = 20;
-    int tasks = 30;
-    vector<Incrementer> incrs;
+    int tasks = 1;
+    auto incr = Incrementer(&counter, n);
+    incr.start();
+    auto incr2 = Incrementer(&counter, n);
+    incr2.start();
 
-    for (int i = 0; i < tasks; i++) {
-        incrs.push_back(Incrementer(&counter, n));
-        incrs[i].start();
-    }
-
-    // for (auto it = incrs.begin(); it != incrs.end(); it++) {
-    //     while (it->)
-    // }
+    sleep(3);
+    std::cout << "count value: " << counter << std::endl;
 }

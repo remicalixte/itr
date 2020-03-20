@@ -7,7 +7,7 @@ class Thread : public PosixThread {
    private:
     timespec startTime;
     timespec stopTime;
-    bool started;
+    bool started = false;
     Mutex startedMu;
 
    public:

@@ -54,6 +54,7 @@ void Mutex::Monitor::notifyAll() {
 }
 
 Mutex::Lock::Lock(Mutex &m) : Mutex::Monitor(m) {
+    std::cout << "inside lock\n";
     mutex.lock();
 }
 
@@ -62,6 +63,7 @@ Mutex::Lock::Lock(Mutex &m, double timeout_ms) : Mutex::Monitor(m) {
 }
 
 Mutex::Lock::~Lock() {
+    std::cout << "inside unlock\n";
     mutex.unlock();
 }
 
