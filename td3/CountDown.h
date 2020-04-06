@@ -1,7 +1,7 @@
 #include "PeriodicTimer.h"
 
-#ifndef CountDown_H
-#define CountDown_H
+#ifndef CountDown_h_INCLUDED
+#define CountDown_h_INCLUDED
 
 class CountDown : public PeriodicTimer {
    private:
