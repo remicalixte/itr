@@ -4,11 +4,9 @@
 #include <time.h>
 
 #include <iostream>
-#include <string>
 
 #include "errno.h"
 #include "libtime.h"
-#include "timer.h"
 
 using namespace std;
 

@@ -10,7 +10,7 @@ inc = $(wildcard td*/)
 inc_params = $(foreach d, $(inc), -I$d)
 src = $(wildcard */*.cc)
 obj = $(src:.cc=.o)
-product = $(td1_products) td2/thread td3/countdown td4/incr td6/active
+product = $(td1_products) $(td2_products) td3/countdown td4/incr td6/active
 
 all: td1 td2 td3 td4 td6
 
@@ -28,10 +28,15 @@ td1_products = td1/qa td1/qb td1/qc td1/qd
 td1: $(td1_products)
 
 # td2
-td2/thread: td2/thread.o td1/libtime.o
+td2/qa: td2/qa.o td1/libtime.o
+	$(LINK.cc) $^ -o $@
+td2/qb: td2/qb.o td1/libtime.o
+	$(LINK.cc) $^ -o $@
+td2/qc: td2/qc.o td1/libtime.o
 	$(LINK.cc) $^ -o $@
 .PHONY: td2
-td2: td2/thread
+td2_products = td2/qa td2/qb td2/qc
+td2: $(td2_products)
 
 
 td3/countdown: td3/main.o td3/CountDown.o td3/PeriodicTimer.o td3/Timer.o  td1/libtime.o
