@@ -1,4 +1,23 @@
-#include "Fifo.h"
+#include <exception>
+#include <queue>
+
+#include "Mutex.h"
+
+#ifndef Fifo_h_INCLUDED
+#define Fifo_h_INCLUDED
+
+template <class T>
+class Fifo {
+   private:
+    std::queue<T> elements;
+    class EmptyException : public std::exception {};
+    Mutex mutex;
+
+   public:
+    void push(T element);
+    T pop();
+    T pop(double timeout_ms);
+};
 
 template <class T>
 void Fifo<T>::push(T element) {
@@ -17,9 +36,12 @@ T Fifo<T>::pop() {
 
             return element;
         }
+
+        printf("is empty\n");
+        // elements is empty
+        Mutex::Monitor(mutex).wait();
+        printf("wait finished\n");
     }
-    // elements is empty
-    Mutex::Monitor(mutex).wait();
     return pop();
 }
 
@@ -34,10 +56,11 @@ T Fifo<T>::pop(double timeout_ms) {
 
             return element;
         }
-    }
-    // elements is empty
-    if (!Mutex::Monitor(mutex).wait(timeout_ms)) {
-        return false;
+
+        // elements is empty
+        if (!Mutex::Monitor(mutex).wait(timeout_ms)) {
+            return false;
+        }
     }
 
     auto end = timespec_now();
@@ -46,3 +69,5 @@ T Fifo<T>::pop(double timeout_ms) {
     // we can retry with the remaining time
     return pop(timeout_ms - timespec_to_ms(elapsed));
 }
+
+#endif
