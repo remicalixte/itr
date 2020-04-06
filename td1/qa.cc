@@ -1,6 +1,7 @@
-#include "assert.h"
+#include <assert.h>
+#include <unistd.h>
+
 #include "libtime.h"
-#include "unistd.h"
 
 int main() {
     timespec now = timespec_now();

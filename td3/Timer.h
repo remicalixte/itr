@@ -1,6 +1,6 @@
+#include <signal.h>
+
 #include "libtime.h"
-#include "signal.h"
-#include "time.h"
 
 #ifndef Timer_h_INCLUDED
 #define Timer_h_INCLUDED

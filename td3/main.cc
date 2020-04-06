@@ -1,5 +1,6 @@
+#include <iostream>
+
 #include "CountDown.h"
-#include "iostream"
 
 int main(void) {
     CountDown countDown = CountDown(10);

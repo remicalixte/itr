@@ -1,11 +1,10 @@
+#include <errno.h>
 #include <limits.h>
 #include <signal.h>
 #include <stdio.h>
-#include <time.h>
 
 #include <iostream>
 
-#include "errno.h"
 #include "libtime.h"
 
 using namespace std;
