@@ -1,7 +1,7 @@
 #include "Timer.h"
 
-#ifndef PerdiodicTimer_H
-#define PerdiodicTimer_H
+#ifndef PerdiodicTimer_h_INCLUDED
+#define PerdiodicTimer_h_INCLUDED
 
 class PeriodicTimer : public Timer {
    private:

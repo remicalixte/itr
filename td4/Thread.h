@@ -3,6 +3,9 @@
 #include "Mutex.h"
 #include "PosixThread.h"
 
+#ifndef Thread_h_INCLUDED
+#define Thread_h_INCLUDED
+
 class Thread : public PosixThread {
    private:
     timespec startTime;
@@ -21,3 +24,5 @@ class Thread : public PosixThread {
     double stopTime_ms();
     double execTime_ms();
 };
+
+#endif

@@ -3,6 +3,10 @@
 #include "errno.h"
 #include "libtime.h"
 #include "pthread.h"
+
+#ifndef PosixThread_h_INCLUDED
+#define PosixThread_h_INCLUDED
+
 class PosixThread {
    private:
     pthread_t posixId;
@@ -22,3 +26,5 @@ class PosixThread {
     bool setScheduling(int schedPolicy, int priority);
     bool getScheduling(int *p_schedPolicy, int *p_priority);
 };
+
+#endif

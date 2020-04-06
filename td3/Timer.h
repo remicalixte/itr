@@ -2,8 +2,8 @@
 #include "signal.h"
 #include "time.h"
 
-#ifndef Timer_H
-#define Timer_H
+#ifndef Timer_h_INCLUDED
+#define Timer_h_INCLUDED
 
 class Timer {
    private:

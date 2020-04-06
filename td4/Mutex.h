@@ -4,6 +4,9 @@
 #include "libtime.h"
 #include "pthread.h"
 
+#ifndef Mutex_h_INCLUDED
+#define Mutex_h_INCLUDED
+
 class Mutex {
    public:
     class Monitor {
@@ -42,3 +45,5 @@ class Mutex {
     bool trylock();
     void unlock();
 };
+
+#endif

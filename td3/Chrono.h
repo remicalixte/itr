@@ -1,6 +1,9 @@
 #include "libtime.h"
 #include "time.h"
 
+#ifndef Chrono_h_INCLUDED
+#define Chrono_h_INCLUDED
+
 class Chrono {
    private:
     timespec startTime_;
@@ -16,3 +19,5 @@ class Chrono {
     double stopTime();
     double lap();
 };
+
+#endif

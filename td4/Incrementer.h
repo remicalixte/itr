@@ -1,5 +1,8 @@
 #include "Thread.h"
 
+#ifndef Incrementer_h_INCLUDED
+#define Incrementer_h_INCLUDED
+
 class Incrementer : public Thread {
    private:
     volatile double *pCounter;
@@ -10,3 +13,5 @@ class Incrementer : public Thread {
     ~Incrementer();
     virtual void run();
 };
+
+#endif

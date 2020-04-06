@@ -2,6 +2,8 @@
 #include "libtime.h"
 #include "limits.h"
 
+#ifndef Semaphore_h_INCLUDED
+#define Semaphore_h_INCLUDED
 class Semaphore {
    private:
     unsigned counter;
@@ -15,3 +17,5 @@ class Semaphore {
     void take();
     bool take(double timeout_ms);
 };
+
+#endif
