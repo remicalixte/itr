@@ -8,7 +8,6 @@ using namespace std;
 int main() {
     volatile double counter = 0;
     int n = 20;
-    int tasks = 1;
     auto incr = Incrementer(&counter, n);
     incr.start();
     auto incr2 = Incrementer(&counter, n);
