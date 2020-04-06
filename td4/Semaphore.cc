@@ -1,7 +1,9 @@
 #include "Semaphore.h"
 
-Semaphore::Semaphore(unsigned iniCount = 0, unsigned maxCount = UINT_MAX) : counter(iniCount), maxCount(maxCount) {
+Semaphore::Semaphore(unsigned iniCount, unsigned maxCount) : counter(iniCount), maxCount(maxCount) {
 }
+
+Semaphore::~Semaphore(){};
 
 void Semaphore::give() {
     auto lock = Mutex::Lock(mutex);
@@ -21,9 +23,10 @@ void Semaphore::take() {
             counter--;
             return;
         }
+
+        // counter is 0
+        Mutex::Monitor(mutex).wait();
     }
-    // counter is 0
-    Mutex::Monitor(mutex).wait();
     // we can retry
     take();
 }
@@ -36,11 +39,11 @@ bool Semaphore::take(double timeout_ms) {
             counter--;
             return true;
         }
-    }
 
-    // counter is 0
-    if (!Mutex::Monitor(mutex).wait(timeout_ms)) {
-        return false;
+        // counter is 0
+        if (!Mutex::Monitor(mutex).wait(timeout_ms)) {
+            return false;
+        }
     }
 
     auto end = timespec_now();
