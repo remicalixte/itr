@@ -11,6 +11,3 @@
 
 # ignore container for vs code remote
 .devcontainer
-
-# images
-images
