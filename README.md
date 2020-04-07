@@ -112,6 +112,51 @@ Counter: 1e+06 - duration: 0.027
 
 On remarque qu'utiliser les mutex permet d'éviter les accès en concurrence. Le résultat est alors stable (le `counter` a toujours la valeur attendue). Cependant l'execution prend plus de temps.
 
+## TD3
+
+### a) Classe Chrono
+
+La class Chrono est implémentée principalement en utilisant les fonctions temporelles utilitaires définies au TD1 a).
+
+On teste le chrono en exécutant `./td3/qa`:
+
+```
+0.009000 ms
+2966.792600 ms
+2966.914551 ms
+```
+
+### b) Classe Timer
+
+La classe abstraite `Timer` utilise implémente la logique temporelle du timer à l'aide des fonctions Posix. Cependant, elle n'implémente pas la logique concernant l'action à réaliser lorsque le timer arrive à échéance. Pour l'implémenter, il faut créer une nouvelle classe héritant de `Timer` et implémentant la méthode virtuelle `callback`.
+Cette méthode est appelée via une référence à l'objet lui-même dans la fonction `call_callback`. Cette référence est passée comme `sigev_value.sival_ptr` lors de la création du `Timer`. Elle est donc passée en argument de `call_callback`, qui est l'action `sa_sigaction` réalisée à l'échéance du Timer.
+
+On implémente une classe `PeriodicTimer`, qui permet d'exécuter la `callback` périodiquement.
+
+Enfin, on implémente un `CountDown` pour tester les deux classes précédentes. On lui demande de compter de 9 à 0.
+On peut le tester avec `./td3/qb`:
+
+```
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+```
+
+### c) Calibration en temps d’une boucle
+
+Dans cet exercice, on utilise les classes définies précédemment pour reproduire la calibration du modèle affine présenté au TD1 d).
+
+On calibre en lançant `./td3/qc` et on obtient:
+`expected time: 2000.000000 ms, got : 1989.029306 ms`
+
+
 ## TD4
 
 ### a) Classe Thread
