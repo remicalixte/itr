@@ -68,49 +68,59 @@ Cet exercice a été mis de côté d'après les consignes reçues en cours.
 En executant la fonction plusieurs fois avec le même paramètre, on obtient parfois le mauvais résultat:
 
 ```
-nLoops: 100
-nTasks: 100
-10000
+final counter value: 9900.000000
+100 100 8.644800
 
-nLoops: 100
-nTasks: 100
-9900
+final counter value: 10000.000000
+100 100 9.683000
 
-nLoops: 100
-nTasks: 100
-9800
-
-nLoops: 100
-nTasks: 100
-10000
+final counter value: 99962.000000
+100 1000 115.854600
 ```
 
 Ceci est dû aux accès en concurrence. Deux threads ou plus peuvent essayer de modifier en même temps la variable. Seules les modifications de l'un d'entre eux sont alors réellement sauvegardées.
 
 ### b) Mesure de temps d’exécution
 
+On exécute la mesure du temps d'exécution pour différents nombres de tâche et différents nombres de boucles:
+
 ![Graphe d'exécution](images/2b.png)
-Sur un OS temps réel, on constate que le nombre de tâche reflète le nombre de coeurs: tant que le nombre de tâches est en dessous du nombre de coeur, le temps d'exécution n'augmente quasiment pas. En revanche, quand on dépasse le nombre de coeurs, on a un bond brusque.
+
+Sur un OS temps réel, on constate que le nombre de tâche reflète le nombre de coeurs: 
+Tant que le nombre de tâches est en dessous du nombre de coeur, le temps d'exécution n'augmente quasiment pas. En revanche, quand on dépasse le nombre de coeurs, on a un bond brusque.
 
 ### c) Exécution sur plusieurs tâches avec mutex
 
-`100000 10 SCHED_RR`
+On exécute la fonction précédente d'abord sans, puis avec protection par le mutex.
+
+`./qc 100000 10 3 1`
 
 ```
-Counter: 564111 - duration: 0.003
-Counter: 623077 - duration: 0.003
-Counter: 565825 - duration: 0.003
+final counter value: 426251.000000
+100000 10 2.116700
+
+final counter value: 276000.000000
+100000 10 2.333200
+
+final counter value: 310632.000000
+100000 10 1.762000
 ```
 
-`100000 10 SCHED_RR protected`
+`./qc 100000 10 3 1`
 
 ```
-Counter: 1e+06 - duration: 0.028
-Counter: 1e+06 - duration: 0.034
-Counter: 1e+06 - duration: 0.027
+final counter value: 1000000.000000
+100000 10 3.836700
+
+final counter value: 1000000.000000
+100000 10 6.062500
+
+final counter value: 1000000.000000
+100000 10 4.057500
 ```
 
-On remarque qu'utiliser les mutex permet d'éviter les accès en concurrence. Le résultat est alors stable (le `counter` a toujours la valeur attendue). Cependant l'execution prend plus de temps.
+On remarque qu'utiliser les mutex permet d'éviter les accès en concurrence. Le résultat est alors stable (le `counter` a toujours la valeur attendue). 
+Cependant l'execution prend plus de temps.
 
 ## TD3
 
