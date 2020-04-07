@@ -10,7 +10,7 @@ inc = $(wildcard td*/)
 inc_params = $(foreach d, $(inc), -I$d)
 src = $(wildcard */*.cc)
 objs = $(src:.cc=.o)
-products = $(td1_products) $(td2_products) $(td3_products) $(td4_products) td6/active
+products = $(td1_products) $(td2_products) $(td3_products) $(td4_products) $(td6_products)
 
 all: td1 td2 td3 td4 td6
 
@@ -63,8 +63,9 @@ td4: $(td4_products)
 
 td6/active: td6/main.o td4/Semaphore.o td4/PosixThread.o td4/Mutex.o td4/Thread.o td1/libtime.o td6/ActiveCalc.o td6/ActiveObject.o td6/Request.o td6/CrunchReq.o td6/Calculator.o
 	$(LINK.cc) $^ -o $@
-.PHONY: td6
-td6: td6/active
+.PHONY: 
+td6_products = td6/active
+td6: $(td6_products)
 
 
 .PHONY: clean
