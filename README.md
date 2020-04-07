@@ -4,10 +4,48 @@ Travaux dirigés pour le cours _Informatique temps Réel_.
 
 ## TD1
 
+### a) Gestion simplifiée du temps Posix
+
+Les fonctions utilitaires de gestion du temps sont définies dans `libtime.h` et implémentées dans `libtime.cc`.
+Pour chaque timestamp manipulé, on vérifie que `tv_nsec` est entre 0 et 1000000000 (exclu).
+
+On teste ces fonctions avec des tests unitaires dans `qa.cc`.
+Si l'exécutable n'affiche rien, c'est que tous les tests passent.
+
+### b) Timers avec callback
+
+Le fichier `qb.cc` implémente un timer en suivant l'exemple du cours.
+
+### c) Fonction simple consommant du CPU
+
+Le fichier `qc.cc` implémente une fonction simple incrémentant un compteur sur un nombre de boucles défini par l'utilisateur.
+
+On exécute cette fonction avec 1,000,000,000 boucles:
+```
+./td1/qc 1000000000
+```
+
+On obtient le résultat suivant:
+```
+1000000000.000000 in 1.253268 seconds
+```
+
 ### d) Mesure du temps d’exécution d’une fonction
 
-- Il faut déclarer pStop comme _virtual_
-- On obtient les résultats suivants:
+Le fichier `4d.cc` propose une modélisation affine du nombre de boucles de la fonction de l'exercice précédent par rapport à son temps d'exécution.
+
+Dans un premier temps, on mesure le nombre de boucles calculées pendant un interval de temps donné, en interrompant la fonction `incr` lorsqu'un timer arrive à échéance. Pour celà, on utilise une varaible booléenne `stop` qui est modifiée par le timer et lue par `incr`.
+Il faut déclarer `stop` comme _volatile_, car celui-ci est modifié par un autre thread.
+
+L'exécution de cette fonction pour 4 secondes donne le nombre d'incréments suivants:
+
+```
+3237265763.000000 in 4.000191 seconds
+```
+
+Dans un second temps, on calibre les paramètres du modèle affine en effectuant deux mesures du nombre de boucle pour deux durées différentes.
+
+On obtient les résultats suivants:
 
 ```
 a: 3.53056e+08
@@ -18,6 +56,10 @@ Model error: 3.75315%
 ```
 
 Note: la calibration rate parfois, probablement à cause d'autres programmes tournant sur la machine. Il est donc possible qu'une nouvelle éxecution du programme donne une erreur de modèle de plus de 50%.
+
+### e) Amélioration des mesures
+
+Cet exercice a été mis de côté d'après les consignes reçues en cours.
 
 ## TD2
 
