@@ -8,3 +8,6 @@
 
 # ignore .vscode again due to rule ignoring executables
 .vscode
+
+# ignore container for vs code remote
+.devcontainer
