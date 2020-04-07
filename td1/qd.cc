@@ -95,6 +95,24 @@ int calib() {
 
     printf("calibration: a=%lf ms-1, b=%lf\n", a, b);
 
+    // Estimate the result with the calibrated model
+    int t_sec = 10;
+    printf("Estimating error for %i sec\n", t_sec);
+    unsigned estimatedLoopNumber = a * t_sec + b;
+    printf("Estimated loop number: %u\n", estimatedLoopNumber);
+
+    // Mesure the true value
+    counter = 0;
+    stop = false;
+
+    setup_timer(&tid, &its, &sev, 6000, &stop);
+    unsigned realLoopNumber = incr(nLoops, &counter, &stop);
+    timer_delete(tid);
+
+    printf("Real loop number: %u\n", realLoopNumber);
+
+    printf("Model error: %f %%\n", (float)std::abs((int)realLoopNumber - (int)estimatedLoopNumber) * 100 / realLoopNumber);
+
     return 0;
 }
 
