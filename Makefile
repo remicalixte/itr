@@ -54,7 +54,7 @@ td4/incr: td4/main.o td4/Incrementer.o td4/PosixThread.o td4/Mutex.o td4/Thread.
 .PHONY: td4
 td4: td4/incr
 
-td6/active: td6/main.o td4/Fifo.o td4/Semaphore.o td4/PosixThread.o td4/Mutex.o td4/Thread.o td1/libtime.o td6/ActiveCalc.o td6/ActiveObject.o td6/Request.o td6/CrunchReq.o td6/Calculator.o
+td6/active: td6/main.o td4/Semaphore.o td4/PosixThread.o td4/Mutex.o td4/Thread.o td1/libtime.o td6/ActiveCalc.o td6/ActiveObject.o td6/Request.o td6/CrunchReq.o td6/Calculator.o
 	$(LINK.cc) $^ -o $@
 .PHONY: td6
 td6: td6/active

@@ -37,10 +37,8 @@ T Fifo<T>::pop() {
             return element;
         }
 
-        printf("is empty\n");
         // elements is empty
         Mutex::Monitor(mutex).wait();
-        printf("wait finished\n");
     }
     return pop();
 }
