@@ -1,5 +1,4 @@
 #include <exception>
-#include <iostream>
 
 #include "libtime.h"
 #include "pthread.h"

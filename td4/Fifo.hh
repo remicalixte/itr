@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include <exception>
 #include <queue>
 
@@ -23,49 +25,44 @@ template <class T>
 void Fifo<T>::push(T element) {
     auto lock = Mutex::Lock(mutex);
     elements.push(element);
-    Mutex::Monitor(mutex).notify();
+    Mutex::Monitor(mutex).notifyAll();
 }
 
 template <class T>
 T Fifo<T>::pop() {
-    {
-        auto lock = Mutex::Lock(mutex);
-        if (!elements.empty()) {
-            auto element = elements.front();
-            elements.pop();
-
-            return element;
-        }
-
-        // elements is empty
+    auto lock = Mutex::Lock(mutex);
+    while (elements.empty()) {
         Mutex::Monitor(mutex).wait();
     }
-    return pop();
+
+    auto element = elements.front();
+    elements.pop();
+
+    return element;
 }
 
 template <class T>
 T Fifo<T>::pop(double timeout_ms) {
     auto start = timespec_now();
-    {
-        auto lock = Mutex::Lock(mutex);
-        if (!elements.empty()) {
-            auto element = elements.front();
-            elements.pop();
 
-            return element;
-        }
-
-        // elements is empty
+    auto lock = Mutex::Lock(mutex);
+    while (timeout_ms > 0 && elements.empty()) {
         if (!Mutex::Monitor(mutex).wait(timeout_ms)) {
             return false;
         }
+
+        //update timeout_ms
+        auto now = timespec_now();
+        auto elapsed = now - start;
+        timeout_ms -= timespec_to_ms(elapsed);
+
+        //update start if we need to wait again
+        start = now;
     }
+    auto element = elements.front();
+    elements.pop();
 
-    auto end = timespec_now();
-    auto elapsed = end - start;
-
-    // we can retry with the remaining time
-    return pop(timeout_ms - timespec_to_ms(elapsed));
+    return element;
 }
 
 #endif

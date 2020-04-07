@@ -15,7 +15,7 @@ class Thread : public PosixThread {
 
    public:
     Thread(/* args */);
-    ~Thread();
+    virtual ~Thread();
     bool start();
     static void sleep_ms(double delay_ms);
     double startTime_ms();

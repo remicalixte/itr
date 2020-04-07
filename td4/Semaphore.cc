@@ -1,5 +1,7 @@
 #include "Semaphore.h"
 
+#include <stdio.h>
+
 Semaphore::Semaphore(unsigned iniCount, unsigned maxCount) : counter(iniCount), maxCount(maxCount) {
 }
 
@@ -12,7 +14,7 @@ void Semaphore::give() {
     }
     if (counter == 1) {
         // wakes any thread that whould be listening
-        Mutex::Monitor(mutex).notify();
+        Mutex::Monitor(mutex).notifyAll();
     }
 }
 
@@ -51,4 +53,8 @@ bool Semaphore::take(double timeout_ms) {
 
     // we can retry with the remaining time
     return take(timeout_ms - timespec_to_ms(elapsed));
+}
+
+unsigned Semaphore::getCounter() {
+    return counter;
 }

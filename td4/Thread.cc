@@ -12,7 +12,6 @@ Thread::~Thread() {
 
 bool Thread::start() {
     auto lock = Mutex::Lock(startedMu);
-    std::cout << "after lock\n";
 
     if (started) {
         return false;
@@ -23,13 +22,11 @@ bool Thread::start() {
 }
 
 void* Thread::call_run(void* v_thread) {
-    std::cout << "cc from call_run\n";
     auto thread = (Thread*)v_thread;
     thread->run();
 
     thread->stopTime = timespec_now();
 
-    std::cout << "lock after run is called\n";
     auto lock = Mutex::Lock(thread->startedMu);
     thread->started = false;
 

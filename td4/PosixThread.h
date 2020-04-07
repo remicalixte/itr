@@ -19,7 +19,7 @@ class PosixThread {
 
     PosixThread();
     PosixThread(pthread_t posixId);
-    ~PosixThread();
+    virtual ~PosixThread();
     void start(void *(*threadFunc)(void *), void *threadArg);
     void join();
     bool join(double timeout_ms);

@@ -16,6 +16,7 @@ class Semaphore {
     void give();
     void take();
     bool take(double timeout_ms);
+    unsigned getCounter();
 };
 
 #endif
