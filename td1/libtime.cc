@@ -67,6 +67,12 @@ timespec timespec_subtract(const timespec& time1_ts, const timespec& time2_ts) {
 timespec timespec_wait(const timespec& delay_ts) {
     timespec remaining;
     nanosleep(&delay_ts, &remaining);
+    int i = nanosleep(&delay_ts, &remaining);
+    // If nanosleep is interrupted
+    if (i == -1)
+    {
+        timespec_wait(remaining);
+    }
 
     return remaining;
 }
