@@ -2,6 +2,41 @@
 
 Travaux dirigés pour le cours _Informatique temps Réel_.
 
+## Compilation
+
+Un `makefile` est disponible. Pour compiler tous les TDs:
+
+```
+make
+```
+
+L'exécutable de chaque exercice se trouve dans le dossier correspondant à son TD, et se nomme `q*`, où `*` est la lettre de l'exercice. Par exemple l'exercice b) du TD3 se trouve à `td3/qb`.
+Sauf pour le td6 dont l'exécutable se nomme `active`.
+
+Voici la liste des commandes pour exécuter ces binaires:
+
+```
+./td1/qa
+./td1/qb
+./td1/qc
+./td1/qd
+
+./td2/qa
+./td2/qb
+./td2/qc
+
+./td3/qa
+./td3/qb
+./td3/qc
+
+./td4/qa
+./td4/qb
+./td4/qc
+./td4/qd
+
+./td6/active
+```
+
 ## TD1
 
 ### a) Gestion simplifiée du temps Posix
@@ -140,11 +175,15 @@ Result 1e+09
 
 ### d) Classe Fifo
 
+## TD5
+
+Comme indiqué en cours, nous ne traitons pas le TD5 dans ce rapport.
+
 ## TD6
 
-Les classes `ActiveObjects` et `Requests` implémentent de manière générale le pattern d'objet actif.
+Les classes `ActiveObject` et `Request` implémentent de manière générale le pattern d'objet actif.
 
-`Requête` est un object abstrait représentant une requête. Il propose une méthode pour attendre le résultat, à l'aide d'un sémaphore. La méthode `execute`, executant le calcul, est virtuelle. En effet, son implémentation est spécifique à chaque cas. Il faut penser à libérer le sémaphore avec `semaphore.give()` dans l'implémentation de cette méthode.
+`Request` est un object abstrait représentant une requête. Il propose une méthode pour attendre le résultat, à l'aide d'un sémaphore. La méthode `execute`, executant le calcul, est virtuelle. En effet, son implémentation est spécifique à chaque cas. Il faut penser à libérer le sémaphore avec `returnSema.give()` dans l'implémentation de cette méthode.
 
 `ActiveObject` est un thread possédant une file de requêtes. Sa boucle principale consiste à extraite les requêtes de la file et les exécuter une par une.
 
