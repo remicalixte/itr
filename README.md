@@ -1,6 +1,10 @@
 # Informatique Temps Réel (ITR)
 
-Travaux dirigés pour le cours _Informatique temps Réel_.
+Travaux dirigés pour le cours _Informatique temps Réel_ à CentraleSupélec, option OSY.
+Réalisés par:
+
+- Rémi Calixte
+- Quentin Verlhac
 
 ## Compilation
 
@@ -58,11 +62,13 @@ Lancer `./td1/qb` pour l'exécuter.
 Le fichier `td1/qc.cc` implémente une fonction simple incrémentant un compteur sur un nombre de boucles défini par l'utilisateur.
 
 On exécute cette fonction avec 1,000,000,000 boucles:
+
 ```
 ./td1/qc 1000000000
 ```
 
 On obtient le résultat suivant:
+
 ```
 1000000000.000000 in 1.253268 seconds
 ```
@@ -104,7 +110,7 @@ Cet exercice a été mis de côté d'après les consignes reçues en cours.
 
 ### a) Exécution sur plusieurs tâches sans mutex
 
-On exécute la fonction plusieurs fois avec les mêmes paramètres: ` ./td2/qa 100 100`. 
+On exécute la fonction plusieurs fois avec les mêmes paramètres: `./td2/qa 100 100`.
 On obtient parfois le mauvais résultat:
 
 ```
@@ -126,7 +132,7 @@ On exécute la mesure du temps d'exécution pour différents nombres de tâche e
 
 ![Graphe d'exécution](images/2b.png)
 
-Sur un OS temps réel, on constate que le nombre de tâche reflète le nombre de coeurs: 
+Sur un OS temps réel, on constate que le nombre de tâche reflète le nombre de coeurs:
 Tant que le nombre de tâches est en dessous du nombre de coeur, le temps d'exécution n'augmente quasiment pas. En revanche, quand on dépasse le nombre de coeurs, on a un bond brusque.
 
 ### c) Exécution sur plusieurs tâches avec mutex
@@ -159,7 +165,7 @@ final counter value: 1000000.000000
 100000 10 4.057500
 ```
 
-On remarque qu'utiliser les mutex permet d'éviter les accès en concurrence. Le résultat est alors stable (le `counter` a toujours la valeur attendue). 
+On remarque qu'utiliser les mutex permet d'éviter les accès en concurrence. Le résultat est alors stable (le `counter` a toujours la valeur attendue).
 Cependant l'execution prend plus de temps.
 
 ## TD3
@@ -207,7 +213,6 @@ par plusieurs objets `CpuLoop`.
 
 On calibre en lançant `./td3/qc` et on obtient:
 `expected time: 2000.000000 ms, got : 1989.029306 ms`
-
 
 ## TD4
 
