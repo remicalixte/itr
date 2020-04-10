@@ -4,13 +4,14 @@
 #ifndef CrunchReq_h_INCLUDED
 #define CrunchReq_h_INCLUDED
 
-class CrunchReq : public Request {
-   private:
+class CrunchReq : public Request
+{
+private:
     double param;
     double result;
     Calculator calc;
 
-   public:
+public:
     CrunchReq(double param);
     ~CrunchReq();
     virtual void execute();

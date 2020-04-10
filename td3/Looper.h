@@ -3,12 +3,13 @@
 #ifndef Looper_h_INCLUDED
 #define Looper_h_INCLUDED
 
-class Looper {
-   private:
+class Looper
+{
+private:
     volatile bool doStop = false;
     double iLoop;
 
-   public:
+public:
     Looper(/* args */);
     ~Looper();
     double runLoop(double nLoops = DBL_MAX);

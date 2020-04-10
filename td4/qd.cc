@@ -8,7 +8,8 @@
 
 using namespace std;
 
-int main() {
+int main()
+{
     Fifo<int> fifo;
     Mutex mu = Mutex();
 
@@ -18,30 +19,36 @@ int main() {
     unsigned n = 5;
     volatile unsigned counter = 0;
 
-    vector<FifoConsumer*>
+    vector<FifoConsumer *>
         cons(nCons);
-    vector<FifoProducer*> prods(nProds);
+    vector<FifoProducer *> prods(nProds);
 
-    for (size_t i = 0; i < nCons; i++) {
+    for (size_t i = 0; i < nCons; i++)
+    {
         cons[i] = new FifoConsumer(&fifo, &mu, &counter);
         cons[i]->start();
     }
-    for (size_t i = 0; i < nProds; i++) {
+    for (size_t i = 0; i < nProds; i++)
+    {
         prods[i] = new FifoProducer(&fifo, n);
         prods[i]->start();
     }
-    for (size_t i = 0; i < nProds; i++) {
+    for (size_t i = 0; i < nProds; i++)
+    {
         prods[i]->join();
     }
-    for (size_t i = 0; i < nProds; i++) {
+    for (size_t i = 0; i < nProds; i++)
+    {
         delete prods[i];
     }
 
-    while (counter < ((n * (n - 1)) / 2) * nProds) {
+    while (counter < ((n * (n - 1)) / 2) * nProds)
+    {
         //wait for total value
     }
 
-    for (size_t i = 0; i < nCons; i++) {
+    for (size_t i = 0; i < nCons; i++)
+    {
         delete cons[i];
     }
 

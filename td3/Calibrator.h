@@ -8,20 +8,21 @@
 #ifndef Calibrator_h_INCLUDED
 #define Calibrator_h_INCLUDED
 
-class Calibrator : public PeriodicTimer {
-   private:
+class Calibrator : public PeriodicTimer
+{
+private:
     double a;
     double b;
     unsigned nSamples;
     std::vector<double> samples;
     Looper looper;
 
-   public:
+public:
     Calibrator(double samplingPeriod_ms, unsigned nSamples);
     ~Calibrator();
     double nLoops(double duration_ms);
 
-   protected:
+protected:
     virtual void callback();
 };
 

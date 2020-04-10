@@ -7,17 +7,21 @@
 
 using namespace std;
 
-unsigned incr(unsigned int nLoops, double* pCounter) {
+unsigned incr(unsigned int nLoops, double *pCounter)
+{
     size_t i;
-    for (i = 0; i < nLoops; i++) {
+    for (i = 0; i < nLoops; i++)
+    {
         (*pCounter)++;
     }
 
     return i;
 }
 
-int main(int argc, char const* argv[]) {
-    if (argc < 2) {
+int main(int argc, char const *argv[])
+{
+    if (argc < 2)
+    {
         printf("needs a counter argument\n");
         return 1;
     }

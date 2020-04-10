@@ -1,17 +1,20 @@
 #include "PosixThread.h"
 
-PosixThread::PosixThread() {
+PosixThread::PosixThread()
+{
     pthread_attr_init(&posixAttr);
     isActive = false;
 }
 
-PosixThread::PosixThread(pthread_t posixId) {
+PosixThread::PosixThread(pthread_t posixId)
+{
     pthread_attr_init(&posixAttr);
     isActive = true;
     int policy;
     sched_param param;
     int retval = pthread_getschedparam(posixId, &policy, &param);
-    if (retval == ESRCH) {
+    if (retval == ESRCH)
+    {
         // posixId is not running
         throw PosixThread::Exception();
     }
@@ -20,30 +23,36 @@ PosixThread::PosixThread(pthread_t posixId) {
     pthread_attr_setschedparam(&posixAttr, &param);
 }
 
-PosixThread::~PosixThread() {
+PosixThread::~PosixThread()
+{
     pthread_attr_destroy(&posixAttr);
 }
 
-void PosixThread::start(void *(*threadFunc)(void *), void *threadArg) {
+void PosixThread::start(void *(*threadFunc)(void *), void *threadArg)
+{
     pthread_create(&posixId, &posixAttr, threadFunc, threadArg);
 }
 
-void PosixThread::join() {
+void PosixThread::join()
+{
     pthread_join(posixId, nullptr);
 }
 
-bool PosixThread::join(double timeout_ms) {
+bool PosixThread::join(double timeout_ms)
+{
     timespec timeout = timespec_from_ms(timeout_ms);
     int retval = pthread_timedjoin_np(posixId, nullptr, &timeout);
     return retval == 0;
 }
 
-bool PosixThread::setScheduling(int schedPolicy, int priority) {
+bool PosixThread::setScheduling(int schedPolicy, int priority)
+{
     sched_param param = {
         sched_priority : priority,
     };
     int retval = pthread_setschedparam(posixId, schedPolicy, &param);
-    if (retval != ESRCH) {
+    if (retval != ESRCH)
+    {
         return true;
     }
     // thread is not yet running, change the attr instead
@@ -52,10 +61,12 @@ bool PosixThread::setScheduling(int schedPolicy, int priority) {
     return true;
 }
 
-bool PosixThread::getScheduling(int *p_schedPolicy, int *p_priority) {
+bool PosixThread::getScheduling(int *p_schedPolicy, int *p_priority)
+{
     sched_param param;
     int retval = pthread_getschedparam(posixId, p_schedPolicy, &param);
-    if (retval != ESRCH) {
+    if (retval != ESRCH)
+    {
         *p_priority = param.sched_priority;
         return true;
     }

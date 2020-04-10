@@ -6,14 +6,15 @@
 #ifndef Thread_h_INCLUDED
 #define Thread_h_INCLUDED
 
-class Thread : public PosixThread {
-   private:
+class Thread : public PosixThread
+{
+private:
     timespec startTime;
     timespec stopTime;
     bool started = false;
     Mutex startedMu;
 
-   public:
+public:
     Thread(/* args */);
     virtual ~Thread();
     bool start();
@@ -22,9 +23,9 @@ class Thread : public PosixThread {
     double stopTime_ms();
     double execTime_ms();
 
-   protected:
+protected:
     virtual void run() = 0;
-    static void* call_run(void* v_thread);
+    static void *call_run(void *v_thread);
 };
 
 #endif

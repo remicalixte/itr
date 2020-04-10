@@ -1,7 +1,8 @@
 #include "Calibrator.h"
 #include "CpuLoop.h"
 
-int main() {
+int main()
+{
     auto calibrator = Calibrator(2000, 3);
 
     double duration_ms = 2000;

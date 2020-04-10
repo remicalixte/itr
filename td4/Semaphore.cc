@@ -2,26 +2,32 @@
 
 #include <stdio.h>
 
-Semaphore::Semaphore(unsigned iniCount, unsigned maxCount) : counter(iniCount), maxCount(maxCount) {
+Semaphore::Semaphore(unsigned iniCount, unsigned maxCount) : counter(iniCount), maxCount(maxCount)
+{
 }
 
 Semaphore::~Semaphore(){};
 
-void Semaphore::give() {
+void Semaphore::give()
+{
     auto lock = Mutex::Lock(mutex);
-    if (counter < maxCount) {
+    if (counter < maxCount)
+    {
         counter++;
     }
-    if (counter == 1) {
+    if (counter == 1)
+    {
         // wakes any thread that whould be listening
         lock.notifyAll();
     }
 }
 
-void Semaphore::take() {
+void Semaphore::take()
+{
     {
         auto lock = Mutex::Lock(mutex);
-        if (counter > 0) {
+        if (counter > 0)
+        {
             counter--;
             return;
         }
@@ -33,17 +39,20 @@ void Semaphore::take() {
     take();
 }
 
-bool Semaphore::take(double timeout_ms) {
+bool Semaphore::take(double timeout_ms)
+{
     auto start = timespec_now();
     {
         auto lock = Mutex::Lock(mutex);
-        if (counter > 0) {
+        if (counter > 0)
+        {
             counter--;
             return true;
         }
 
         // counter is 0
-        if (!lock.wait(timeout_ms)) {
+        if (!lock.wait(timeout_ms))
+        {
             return false;
         }
     }
@@ -55,6 +64,7 @@ bool Semaphore::take(double timeout_ms) {
     return take(timeout_ms - timespec_to_ms(elapsed));
 }
 
-unsigned Semaphore::getCounter() {
+unsigned Semaphore::getCounter()
+{
     return counter;
 }

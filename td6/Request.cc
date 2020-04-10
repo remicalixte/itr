@@ -1,11 +1,14 @@
 #include "Request.h"
 
-Request::Request(/* args */) {
+Request::Request(/* args */)
+{
 }
 
-Request::~Request() {
+Request::~Request()
+{
 }
 
-void Request::waitReturn() {
+void Request::waitReturn()
+{
     returnSema.take();
 }

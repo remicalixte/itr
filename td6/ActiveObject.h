@@ -5,18 +5,19 @@
 #ifndef ActiveObject_h_INCLUDED
 #define ActiveObject_h_INCLUDED
 
-class ActiveObject : public Thread {
-   private:
+class ActiveObject : public Thread
+{
+private:
     bool stopped = false;
 
-   public:
+public:
     ActiveObject(/* args */);
     ~ActiveObject();
     virtual void run();
     void stop();
 
-   protected:
-    Fifo<Request*> reqFifo;
+protected:
+    Fifo<Request *> reqFifo;
 };
 
 #endif

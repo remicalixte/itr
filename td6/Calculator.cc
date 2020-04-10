@@ -1,12 +1,15 @@
 #include "Calculator.h"
 
-Calculator::Calculator(/* args */) {
+Calculator::Calculator(/* args */)
+{
 }
 
-Calculator::~Calculator() {
+Calculator::~Calculator()
+{
 }
 
-double Calculator::crunch(double param) {
+double Calculator::crunch(double param)
+{
     sleep(2);
     return param * 2;
 }

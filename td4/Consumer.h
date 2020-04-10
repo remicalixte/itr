@@ -1,14 +1,15 @@
 #include "Semaphore.h"
 #include "Thread.h"
 
-class Consumer : public Thread {
-   private:
-    Semaphore& sema;
+class Consumer : public Thread
+{
+private:
+    Semaphore &sema;
 
-   public:
-    Consumer(Semaphore& sema);
+public:
+    Consumer(Semaphore &sema);
     ~Consumer();
 
-   protected:
+protected:
     virtual void run();
 };

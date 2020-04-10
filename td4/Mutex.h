@@ -6,28 +6,34 @@
 #ifndef Mutex_h_INCLUDED
 #define Mutex_h_INCLUDED
 
-class Mutex {
-   public:
-    class Monitor {
-       public:
-        class TimeoutException : public std::exception {};
+class Mutex
+{
+public:
+    class Monitor
+    {
+    public:
+        class TimeoutException : public std::exception
+        {
+        };
 
         void wait();
         bool wait(double timeout_ms);
         void notify();
         void notifyAll();
 
-       protected:
+    protected:
         Monitor(Mutex &m);
         Mutex &mutex;
     };
-    class Lock : public Mutex::Monitor {
-       public:
+    class Lock : public Mutex::Monitor
+    {
+    public:
         Lock(Mutex &m);
         Lock(Mutex &m, double timeout_ms);
         ~Lock();
     };
-    class TryLock : public Mutex::Monitor {
+    class TryLock : public Mutex::Monitor
+    {
         TryLock(Mutex &m);
         ~TryLock();
     };
@@ -35,7 +41,7 @@ class Mutex {
     Mutex();
     ~Mutex();
 
-   private:
+private:
     pthread_mutex_t posixId;
     pthread_cond_t posixCondId;
 
