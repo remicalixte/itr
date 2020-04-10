@@ -202,3 +202,18 @@ Les classes `ActiveCalc` et `CrunchReq` héritent des classes précédentes pour
 Enfin, la classe `Client` représente un client qui demande l'exécution d'un calcul auprès d'un `ActiveCalc`. Son constructeur prend le paramètre du calcul ainsi que la référence vers le `ActiveCalc` à solliciter.
 
 Le fichier `main` met en oeuvre le calcul en asynchrone de requêtes demandées par 10 clients différents.
+
+Pour tester l'ensemble, lancer la commande `./td6/active`:
+
+```
+Client 2 result 4
+Client 4 result 8
+Client 16 result 32
+Client 8 result 16
+Client 32 result 64
+Client 128 result 256
+Client 64 result 128
+Client 256 result 512
+Client 1024 result 2048
+Client 512 result 1024
+```

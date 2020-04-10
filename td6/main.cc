@@ -1,18 +1,33 @@
+#include <vector>
+#include <memory>
 #include "ActiveCalc.h"
-#include "stdio.h"
+#include "Client.h"
 
-int main() {
-    ActiveCalc acalc;
-    printf("async calc to be started\n");
-    acalc.start();
-    printf("async calc started\n");
+int main()
+{
+    ActiveCalc activeCalc;
+    std::vector<std::unique_ptr<Client>> clients(10);
 
-    CrunchReq* req = acalc.async_crunch(12);
-    printf("sent async crunch\n");
-    double result = req->waitReturn();
+    double seed = 2;
+    for (auto &client : clients)
+    {
+        client.reset(new Client(seed, &activeCalc));
+        seed *= 2;
+    };
 
-    printf("result: %lf\n", result);
-    acalc.stop();
+    // start active calc
+    activeCalc.start();
+
+    // start clients
+    for (auto &client : clients)
+    {
+        client->start();
+    }
+    for (auto &client : clients)
+    {
+        client->join();
+    }
+    activeCalc.stop();
 
     return 0;
 }

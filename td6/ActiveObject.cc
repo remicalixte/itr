@@ -8,8 +8,10 @@ ActiveObject::~ActiveObject() {
 
 void ActiveObject::run() {
     while (!stopped) {
-        Request* req = reqFifo.pop();
+        Request* req = reqFifo.pop(1000);
+        if (req != nullptr) {
         req->execute();
+        }
     }
 }
 
