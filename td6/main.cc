@@ -27,6 +27,7 @@ int main()
     {
         client->join();
     }
+    activeCalc.stop();
 
     return 0;
 }

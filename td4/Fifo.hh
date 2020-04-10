@@ -48,7 +48,7 @@ T Fifo<T>::pop(double timeout_ms) {
     auto lock = Mutex::Lock(mutex);
     while (timeout_ms > 0 && elements.empty()) {
         if (!Mutex::Monitor(mutex).wait(timeout_ms)) {
-            return false;
+            return T{};
         }
 
         //update timeout_ms
