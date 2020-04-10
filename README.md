@@ -216,12 +216,13 @@ Pour tester `Thread`, on crée une sous-classe `Incrementer` qui incrémente un 
 count value: 125673
 ```
 
-Cependant on remarque que la valeur finale du compteur n'est pas la même à chaque lancé.
+Cependant on remarque que la valeur finale du compteur n'est pas la même à chaque lancé: il y a des race conditions entre les accès au compteur par les différents threads.
 
 ### b) Classes Mutex
 
-La classe `Mutex` représente un `pthread_mutex_t`. Cependant nous choisissons de représenter les actions à effectuer sur ce mutex par des classes
-imbriquées plutôt que par de simples méthodes. On crée donc une class `Mutex::Monitor` pour représenter les actions `wait` et `notify` et des classes `Mutex::Lock` et `Mutex::TryLock`, sous-classes de `Mutex::Monitor` pour représenter les actions de `lock` et `unlock`. Pour `lock` le mutex il faut ainsi créer un objet `Lock` ou `TryLock` qui vérouille le mutex jusqu'à l'appelle de son destructeur, typiquement à la fin du scope dans lequel il est créé. On peut aussi appeler les méthodes `wait`, `notify` et `notifyAll` sur ce lock. On peut le tester avec `./td4/qb`.
+La classe `Mutex` représente un `pthread_mutex_t`. Cependant nous choisissons de représenter les actions à effectuer sur ce mutex par des classes imbriquées plutôt que par de simples méthodes. On crée donc une class `Mutex::Monitor` pour représenter les actions `wait` et `notify` et des classes `Mutex::Lock` et `Mutex::TryLock`, sous-classes de `Mutex::Monitor` pour représenter les actions de `lock` et `unlock`. Pour `lock` le mutex il faut ainsi créer un objet `Lock` ou `TryLock` qui vérouille le mutex jusqu'à l'appel de son destructeur, typiquement à la fin du scope dans lequel il est créé. On peut aussi appeler les méthodes `wait`, `notify` et `notifyAll` sur ce lock.
+
+On peut le tester avec `./td4/qb`.
 
 ```
 count value: 300000
@@ -231,7 +232,9 @@ Avec l'ajout d'un mutex, la valeur finale est toujours la même, et bien la vale
 
 ### c) Classe Semaphore
 
-La classe `Semaphore` est une "boîtes à jetons" à accès concurrent. Elle est implémentée à l'aide d'un compteur dont l'accès est protégé par un `Mutex`. La méthode `give` incrémente le compteur, la méthode `take` décrémente le compteur s'il est supérieur à `0`, Sinon on appelle `wait` sur le mutex. Quand `give` est appelée, `notify` permet de réveiller un éventuel thread mis en pause. On peut le tester avec `./td4/qc`.
+La classe `Semaphore` est une "boîtes à jetons" à accès concurrent. Elle est implémentée à l'aide d'un compteur dont l'accès est protégé par un `Mutex`. La méthode `give` incrémente le compteur, la méthode `take` décrémente le compteur s'il est supérieur à `0`, Sinon on appelle `wait` sur le mutex. Quand `give` est appelée, `notify` permet de réveiller un éventuel thread mis en pause.
+
+On peut le tester avec `./td4/qc`.
 
 ```
 final semaphore counter value: 24
@@ -239,7 +242,9 @@ final semaphore counter value: 24
 
 ### d) Classe Fifo
 
-La classe template `Fifo` est une file générique à accès concurrent qui support les méthodes `push` et `pop`. Elle est implémentée à l'aide d'une clase de la bibliothèque standard du C++: `std::queue`. Son accès est protégé par un mutex. `push` ajouter un élément à la fin de la file. `pop` extrait à l'élément au début de la file ou utilise `wait` du mutex si la file est vide. `push` appelle également `notify` pour réveiller un éventuel thread mis en pause. On peut la tester avec `./td4/qd`.
+La classe template `Fifo` est une file générique à accès concurrent qui support les méthodes `push` et `pop`. Elle est implémentée à l'aide d'une clase de la bibliothèque standard du C++: `std::queue`. Son accès est protégé par un mutex. `push` ajouter un élément à la fin de la file. `pop` extrait à l'élément au début de la file ou utilise `wait` du mutex si la file est vide. `push` appelle également `notify` pour réveiller un éventuel thread mis en pause.
+
+On peut la tester avec `./td4/qd`.
 
 ```
 final counter value: 30
