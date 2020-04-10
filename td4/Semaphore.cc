@@ -14,7 +14,7 @@ void Semaphore::give() {
     }
     if (counter == 1) {
         // wakes any thread that whould be listening
-        Mutex::Monitor(mutex).notifyAll();
+        lock.notifyAll();
     }
 }
 
@@ -27,7 +27,7 @@ void Semaphore::take() {
         }
 
         // counter is 0
-        Mutex::Monitor(mutex).wait();
+        lock.wait();
     }
     // we can retry
     take();
@@ -43,7 +43,7 @@ bool Semaphore::take(double timeout_ms) {
         }
 
         // counter is 0
-        if (!Mutex::Monitor(mutex).wait(timeout_ms)) {
+        if (!lock.wait(timeout_ms)) {
             return false;
         }
     }
