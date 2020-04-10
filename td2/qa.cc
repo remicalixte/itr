@@ -6,28 +6,33 @@
 #include <string>
 
 using namespace std;
-void incr(unsigned int nLoops, double* pCounter);
-void* call_incr(void* data);
+void incr(unsigned int nLoops, double *pCounter);
+void *call_incr(void *data);
 
-struct call_incr_arg {
+struct call_incr_arg
+{
     unsigned int nLoops;
-    volatile double* pCounter;
+    volatile double *pCounter;
 };
 
-void incr(unsigned int nLoops, volatile double* pCounter) {
-    for (size_t i = 0; i < nLoops; i++) {
+void incr(unsigned int nLoops, volatile double *pCounter)
+{
+    for (size_t i = 0; i < nLoops; i++)
+    {
         (*pCounter)++;
     }
 }
 
-void* call_incr(void* data) {
-    call_incr_arg* args = (call_incr_arg*)data;
+void *call_incr(void *data)
+{
+    call_incr_arg *args = (call_incr_arg *)data;
     incr(args->nLoops, args->pCounter);
 
     return NULL;
 }
 
-void set_sched(int schedPolicy, pthread_attr_t* attr) {
+void set_sched(int schedPolicy, pthread_attr_t *attr)
+{
     sched_param main_param = {
         sched_priority : sched_get_priority_max(schedPolicy),
     };
@@ -40,10 +45,12 @@ void set_sched(int schedPolicy, pthread_attr_t* attr) {
     pthread_attr_setschedparam(attr, &child_param);
 }
 
-int main(int argc, char const* argv[]) {
+int main(int argc, char const *argv[])
+{
     timespec start = timespec_now();
 
-    if (argc < 3) {
+    if (argc < 3)
+    {
         printf("needs a counter argument and task number\n");
         return 1;
     }
@@ -56,11 +63,13 @@ int main(int argc, char const* argv[]) {
         pCounter : &counter,
     };
 
-    pthread_t* tasks = (pthread_t*)malloc(nTasks * sizeof(pthread_t));
-    for (size_t i = 0; i < nTasks; i++) {
+    pthread_t *tasks = (pthread_t *)malloc(nTasks * sizeof(pthread_t));
+    for (size_t i = 0; i < nTasks; i++)
+    {
         pthread_create(&tasks[i], nullptr, call_incr, &args);
     }
-    for (size_t i = 0; i < nTasks; i++) {
+    for (size_t i = 0; i < nTasks; i++)
+    {
         pthread_join(tasks[i], NULL);
     }
 

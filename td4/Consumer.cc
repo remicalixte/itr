@@ -1,11 +1,14 @@
 #include "Consumer.h"
 
-Consumer::Consumer(Semaphore& sema) : sema(sema) {
+Consumer::Consumer(Semaphore &sema) : sema(sema)
+{
 }
 
-Consumer::~Consumer() {
+Consumer::~Consumer()
+{
 }
 
-void Consumer::run() {
+void Consumer::run()
+{
     sema.take();
 }

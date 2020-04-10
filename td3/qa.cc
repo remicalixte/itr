@@ -4,7 +4,8 @@
 
 #include "Chrono.h"
 
-int main() {
+int main()
+{
     auto chrono = Chrono();
     printf("%lf ms\n", chrono.lap());
     sleep(3);

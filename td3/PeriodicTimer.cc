@@ -1,6 +1,7 @@
 #include "PeriodicTimer.h"
 
-void PeriodicTimer::start(double duration_ms) {
+void PeriodicTimer::start(double duration_ms)
+{
     itimerspec its = {
         it_interval : timespec_from_ms(duration_ms),
         it_value : timespec_from_ms(duration_ms),

@@ -1,14 +1,15 @@
 #include "Semaphore.h"
 #include "Thread.h"
 
-class Producer : public Thread {
-   private:
-    Semaphore& sema;
+class Producer : public Thread
+{
+private:
+    Semaphore &sema;
 
-   public:
-    Producer(Semaphore& sema);
+public:
+    Producer(Semaphore &sema);
     ~Producer();
 
-   protected:
+protected:
     virtual void run();
 };

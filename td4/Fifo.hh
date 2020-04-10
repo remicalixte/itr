@@ -9,29 +9,35 @@
 #define Fifo_h_INCLUDED
 
 template <class T>
-class Fifo {
-   private:
+class Fifo
+{
+private:
     std::queue<T> elements;
-    class EmptyException : public std::exception {};
+    class EmptyException : public std::exception
+    {
+    };
     Mutex mutex;
 
-   public:
+public:
     void push(T element);
     T pop();
     T pop(double timeout_ms);
 };
 
 template <class T>
-void Fifo<T>::push(T element) {
+void Fifo<T>::push(T element)
+{
     auto lock = Mutex::Lock(mutex);
     elements.push(element);
     lock.notifyAll();
 }
 
 template <class T>
-T Fifo<T>::pop() {
+T Fifo<T>::pop()
+{
     auto lock = Mutex::Lock(mutex);
-    while (elements.empty()) {
+    while (elements.empty())
+    {
         lock.wait();
     }
 
@@ -42,12 +48,15 @@ T Fifo<T>::pop() {
 }
 
 template <class T>
-T Fifo<T>::pop(double timeout_ms) {
+T Fifo<T>::pop(double timeout_ms)
+{
     auto start = timespec_now();
 
     auto lock = Mutex::Lock(mutex);
-    while (timeout_ms > 0 && elements.empty()) {
-        if (!lock.wait(timeout_ms)) {
+    while (timeout_ms > 0 && elements.empty())
+    {
+        if (!lock.wait(timeout_ms))
+        {
             return T{};
         }
 

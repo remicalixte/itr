@@ -3,12 +3,13 @@
 #ifndef Chrono_h_INCLUDED
 #define Chrono_h_INCLUDED
 
-class Chrono {
-   private:
+class Chrono
+{
+private:
     timespec startTime_;
     timespec stopTime_;
 
-   public:
+public:
     Chrono(/* args */);
     ~Chrono();
     void stop();

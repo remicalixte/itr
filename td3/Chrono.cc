@@ -1,36 +1,45 @@
 #include "Chrono.h"
 
-Chrono::Chrono() {
+Chrono::Chrono()
+{
     restart();
 }
 
-Chrono::~Chrono() {
+Chrono::~Chrono()
+{
 }
 
-void Chrono::stop() {
+void Chrono::stop()
+{
     stopTime_ = timespec_now();
 }
 
-void Chrono::restart() {
+void Chrono::restart()
+{
     startTime_ = timespec_now();
     stopTime_ = timespec_from_ms(0);
 }
 
-bool Chrono::isActive() {
+bool Chrono::isActive()
+{
     return stopTime_ == timespec_from_ms(0);
 }
 
-double Chrono::startTime() {
+double Chrono::startTime()
+{
     return timespec_to_ms(startTime_);
 }
 
-double Chrono::stopTime() {
+double Chrono::stopTime()
+{
     return timespec_to_ms(stopTime_);
 }
 
-double Chrono::lap() {
+double Chrono::lap()
+{
     timespec time = stopTime_;
-    if (stopTime_ == timespec_from_ms(0)) {
+    if (stopTime_ == timespec_from_ms(0))
+    {
         time = startTime_;
     }
     return timespec_to_ms(timespec_now() - time);

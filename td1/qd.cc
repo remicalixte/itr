@@ -9,17 +9,19 @@
 
 using namespace std;
 
-unsigned long incr(unsigned long nLoops, double* pCounter, volatile bool* pStop);
-void incr_stop(int, siginfo_t* si, void*);
-int setup_timer(timer_t* tid, itimerspec* its, sigevent* sev, double duration_ms, volatile bool* pStop);
+unsigned long incr(unsigned long nLoops, double *pCounter, volatile bool *pStop);
+void incr_stop(int, siginfo_t *si, void *);
+int setup_timer(timer_t *tid, itimerspec *its, sigevent *sev, double duration_ms, volatile bool *pStop);
 int calib();
 
-int setup_timer(timer_t* tid, itimerspec* its, sigevent* sev, double duration_ms, volatile bool* pStop) {
+int setup_timer(timer_t *tid, itimerspec *its, sigevent *sev, double duration_ms, volatile bool *pStop)
+{
     struct sigaction sa;
     sa.sa_flags = SA_SIGINFO;
     sa.sa_sigaction = incr_stop;
     int ret = sigemptyset(&sa.sa_mask);
-    if (ret != 0) {
+    if (ret != 0)
+    {
         printf("sigemptyset\n");
         return 1;
     }
@@ -27,17 +29,19 @@ int setup_timer(timer_t* tid, itimerspec* its, sigevent* sev, double duration_ms
 
     sev->sigev_notify = SIGEV_SIGNAL;
     sev->sigev_signo = SIGRTMIN;
-    sev->sigev_value.sival_ptr = (void*)pStop;
+    sev->sigev_value.sival_ptr = (void *)pStop;
 
     ret = timer_create(CLOCK_REALTIME, sev, tid);
-    if (ret != 0) {
+    if (ret != 0)
+    {
         printf("timer_create\n");
         return 1;
     }
     its->it_value = timespec_from_ms(duration_ms);
     its->it_interval = timespec_from_ms(0);
     ret = timer_settime(*tid, 0, its, nullptr);
-    if (ret != 0) {
+    if (ret != 0)
+    {
         printf("timer_settime: %d\n", errno);
         return 1;
     }
@@ -45,23 +49,27 @@ int setup_timer(timer_t* tid, itimerspec* its, sigevent* sev, double duration_ms
     return 0;
 }
 
-unsigned long incr(unsigned long nLoops, double* pCounter, volatile bool* pStop) {
+unsigned long incr(unsigned long nLoops, double *pCounter, volatile bool *pStop)
+{
     unsigned long i;
-    for (i = 0; !(*pStop) && i < nLoops; i++) {
+    for (i = 0; !(*pStop) && i < nLoops; i++)
+    {
         (*pCounter)++;
     }
 
     return i;
 }
 
-void incr_stop(int, siginfo_t* si, void*) {
+void incr_stop(int, siginfo_t *si, void *)
+{
     std::cout << "incr should stop" << std::endl;
 
-    volatile bool* pStop = (volatile bool*)si->si_value.sival_ptr;
+    volatile bool *pStop = (volatile bool *)si->si_value.sival_ptr;
     *pStop = true;
 }
 
-int calib() {
+int calib()
+{
     unsigned long nLoops = ULONG_MAX;
     double counter = 0;
     volatile bool stop = false;
@@ -116,7 +124,8 @@ int calib() {
     return 0;
 }
 
-int main() {
+int main()
+{
     unsigned long nLoops = ULONG_MAX;
     double counter = 0;
     volatile bool stop = false;

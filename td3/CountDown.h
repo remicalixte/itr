@@ -3,11 +3,12 @@
 #ifndef CountDown_h_INCLUDED
 #define CountDown_h_INCLUDED
 
-class CountDown : public PeriodicTimer {
-   private:
+class CountDown : public PeriodicTimer
+{
+private:
     int n;
 
-   public:
+public:
     int getn();
     CountDown(int n);
     ~CountDown();

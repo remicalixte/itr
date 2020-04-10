@@ -6,16 +6,18 @@
 using namespace std;
 
 void setup_timer();
-void timer_handler(int sig, siginfo_t* si, void*);
+void timer_handler(int sig, siginfo_t *si, void *);
 
-void timer_handler(int, siginfo_t* si, void*) {
-    int* counter = (int*)si->si_value.sival_ptr;
+void timer_handler(int, siginfo_t *si, void *)
+{
+    int *counter = (int *)si->si_value.sival_ptr;
 
     printf("%d\n", *counter);
     (*counter)++;
 }
 
-void setup_timer(double time_ms, void (*callback)(int, siginfo_t* si, void*)) {
+void setup_timer(double time_ms, void (*callback)(int, siginfo_t *si, void *))
+{
     struct sigaction sa;
     sa.sa_flags = SA_SIGINFO;
     sa.sa_sigaction = callback;
@@ -26,7 +28,7 @@ void setup_timer(double time_ms, void (*callback)(int, siginfo_t* si, void*)) {
     struct sigevent sev;
     sev.sigev_notify = SIGEV_SIGNAL;
     sev.sigev_signo = SIGRTMIN;
-    sev.sigev_value.sival_ptr = (void*)&counter;
+    sev.sigev_value.sival_ptr = (void *)&counter;
 
     timer_t tid;
     timer_create(CLOCK_REALTIME, &sev, &tid);
@@ -36,7 +38,8 @@ void setup_timer(double time_ms, void (*callback)(int, siginfo_t* si, void*)) {
 
     timer_settime(tid, 0, &its, nullptr);
 
-    while (counter < 15) {
+    while (counter < 15)
+    {
     }
 
     itimerspec its2;
@@ -46,7 +49,8 @@ void setup_timer(double time_ms, void (*callback)(int, siginfo_t* si, void*)) {
     timer_delete(tid);
 }
 
-int main() {
+int main()
+{
     setup_timer(500, timer_handler);
     return 0;
 }

@@ -4,18 +4,19 @@
 #ifndef Incrementer_h_INCLUDED
 #define Incrementer_h_INCLUDED
 
-class Incrementer : public Thread {
-   private:
+class Incrementer : public Thread
+{
+private:
     volatile double *pCounter;
     int n;
     bool protect;
     Mutex *mu;
 
-   public:
+public:
     Incrementer(volatile double *pCounter, int n, bool protect = false, Mutex *mu = nullptr);
     ~Incrementer();
 
-   protected:
+protected:
     virtual void run();
 };
 

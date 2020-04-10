@@ -3,10 +3,11 @@
 #ifndef PerdiodicTimer_h_INCLUDED
 #define PerdiodicTimer_h_INCLUDED
 
-class PeriodicTimer : public Timer {
-   private:
+class PeriodicTimer : public Timer
+{
+private:
     /* data */
-   public:
+public:
     void start(double duration_ms);
 };
 

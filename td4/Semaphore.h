@@ -4,13 +4,14 @@
 
 #ifndef Semaphore_h_INCLUDED
 #define Semaphore_h_INCLUDED
-class Semaphore {
-   private:
+class Semaphore
+{
+private:
     unsigned counter;
     unsigned maxCount;
     Mutex mutex;
 
-   public:
+public:
     Semaphore(unsigned iniCount = 0, unsigned maxCount = UINT_MAX);
     ~Semaphore();
     void give();
