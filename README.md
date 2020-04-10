@@ -82,7 +82,9 @@ Il faut déclarer `stop` comme _volatile_, car celui-ci est modifié par un autr
 
 L'exécution de cette fonction pour 4 secondes donne le nombre d'incréments suivants:
 
-`./td1/qd`
+```
+./td1/qd
+```
 
 ```
 3237265763.000000 in 4.000191 seconds
