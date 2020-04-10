@@ -197,8 +197,8 @@ On peut le tester avec `./td3/qb`:
 ### c) Calibration en temps d’une boucle
 
 Dans cet exercice, on utilise les classes définies précédemment pour reproduire la calibration du modèle affine présenté au TD1 d).
-La Calibration est effectuée à la création de l'object `Calibrator` à l'un objet `Looper`. Le `Calibrator` créé peut ensuite être utilisé
-plusieurs objets `CpuLoop`.
+La Calibration est effectuée à la création de l'object `Calibrator` à l'aide d'un objet `Looper`. Le `Calibrator` créé peut ensuite être utilisé
+par plusieurs objets `CpuLoop`.
 
 On calibre en lançant `./td3/qc` et on obtient:
 `expected time: 2000.000000 ms, got : 1989.029306 ms`
@@ -208,7 +208,7 @@ On calibre en lançant `./td3/qc` et on obtient:
 
 ### a) Classe Thread
 
-On crée d'abord une classe `PosixThread` qui encapsule la logique des threads posix en utilisant les fonctions `pthread_*`, le constructeur d'un `PosixThread` prend notamment une fonction en paramètre qui sera exécutée. On crée ensuite une class `Thread` héritat de `PosixThread` pour suivre au mieux les principes de la programmation orientée objet. Cette classe comporte une méthode abstraite `run` qui doit être implémentée par une sous-classe et sera exécutée dans un thread posix.
+On crée d'abord une classe `PosixThread` qui encapsule la logique des threads posix en utilisant les fonctions `pthread_*`, le constructeur d'un `PosixThread` prend notamment une fonction en paramètre qui sera exécutée. On crée ensuite une class `Thread` héritant de `PosixThread` pour suivre au mieux les principes de la programmation orientée objet. Cette classe comporte une méthode abstraite `run` qui doit être implémentée par une sous-classe et sera exécutée dans un thread posix.
 
 Pour tester `Thread`, on crée une sous-classe `Incrementer` qui incrémente un compteur en paralèlle. On lance plusieurs `Incrementer` en même temps pour tester le comportement des threads. On peut tester ce code avec `./td4/qa`.
 
