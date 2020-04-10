@@ -25,14 +25,14 @@ template <class T>
 void Fifo<T>::push(T element) {
     auto lock = Mutex::Lock(mutex);
     elements.push(element);
-    Mutex::Monitor(mutex).notifyAll();
+    lock.notifyAll();
 }
 
 template <class T>
 T Fifo<T>::pop() {
     auto lock = Mutex::Lock(mutex);
     while (elements.empty()) {
-        Mutex::Monitor(mutex).wait();
+        lock.wait();
     }
 
     auto element = elements.front();
@@ -47,7 +47,7 @@ T Fifo<T>::pop(double timeout_ms) {
 
     auto lock = Mutex::Lock(mutex);
     while (timeout_ms > 0 && elements.empty()) {
-        if (!Mutex::Monitor(mutex).wait(timeout_ms)) {
+        if (!lock.wait(timeout_ms)) {
             return T{};
         }
 

@@ -12,13 +12,13 @@ class Mutex {
        public:
         class TimeoutException : public std::exception {};
 
-        Monitor(Mutex &m);
         void wait();
         bool wait(double timeout_ms);
         void notify();
         void notifyAll();
 
        protected:
+        Monitor(Mutex &m);
         Mutex &mutex;
     };
     class Lock : public Mutex::Monitor {
@@ -35,7 +35,7 @@ class Mutex {
     Mutex();
     ~Mutex();
 
-   protected:
+   private:
     pthread_mutex_t posixId;
     pthread_cond_t posixCondId;
 
