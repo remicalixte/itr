@@ -44,16 +44,18 @@ Voici la liste des commandes pour exécuter ces binaires:
 Les fonctions utilitaires de gestion du temps sont définies dans `libtime.h` et implémentées dans `libtime.cc`.
 Pour chaque timestamp manipulé, on vérifie que `tv_nsec` est entre 0 et 1000000000 (exclu).
 
-On teste ces fonctions avec des tests unitaires dans `qa.cc`.
+On teste ces fonctions avec des tests unitaires dans `td1/qa.cc`.
+Lancer `./td1/qa` pour l'exécuter.
 Si l'exécutable n'affiche rien, c'est que tous les tests passent.
 
 ### b) Timers avec callback
 
-Le fichier `qb.cc` implémente un timer en suivant l'exemple du cours.
+Le fichier `td1/qb.cc` implémente un timer en suivant l'exemple du cours.
+Lancer `./td1/qb` pour l'exécuter.
 
 ### c) Fonction simple consommant du CPU
 
-Le fichier `qc.cc` implémente une fonction simple incrémentant un compteur sur un nombre de boucles défini par l'utilisateur.
+Le fichier `td1/qc.cc` implémente une fonction simple incrémentant un compteur sur un nombre de boucles défini par l'utilisateur.
 
 On exécute cette fonction avec 1,000,000,000 boucles:
 ```
@@ -67,12 +69,14 @@ On obtient le résultat suivant:
 
 ### d) Mesure du temps d’exécution d’une fonction
 
-Le fichier `4d.cc` propose une modélisation affine du nombre de boucles de la fonction de l'exercice précédent par rapport à son temps d'exécution.
+Le fichier `td1/qd.cc` propose une modélisation affine du nombre de boucles de la fonction de l'exercice précédent par rapport à son temps d'exécution.
 
 Dans un premier temps, on mesure le nombre de boucles calculées pendant un interval de temps donné, en interrompant la fonction `incr` lorsqu'un timer arrive à échéance. Pour celà, on utilise une varaible booléenne `stop` qui est modifiée par le timer et lue par `incr`.
 Il faut déclarer `stop` comme _volatile_, car celui-ci est modifié par un autre thread.
 
 L'exécution de cette fonction pour 4 secondes donne le nombre d'incréments suivants:
+
+`./td1/qd`
 
 ```
 3237265763.000000 in 4.000191 seconds
@@ -100,7 +104,8 @@ Cet exercice a été mis de côté d'après les consignes reçues en cours.
 
 ### a) Exécution sur plusieurs tâches sans mutex
 
-En executant la fonction plusieurs fois avec le même paramètre, on obtient parfois le mauvais résultat:
+On exécute la fonction plusieurs fois avec les mêmes paramètres: ` ./td2/qa 100 100`. 
+On obtient parfois le mauvais résultat:
 
 ```
 final counter value: 9900.000000
@@ -117,7 +122,7 @@ Ceci est dû aux accès en concurrence. Deux threads ou plus peuvent essayer de 
 
 ### b) Mesure de temps d’exécution
 
-On exécute la mesure du temps d'exécution pour différents nombres de tâche et différents nombres de boucles:
+On exécute la mesure du temps d'exécution pour différents nombres de tâche et différents nombres de boucles avec le script `./td2/qb.sh`. On trace la courbe suivante:
 
 ![Graphe d'exécution](images/2b.png)
 
@@ -128,7 +133,7 @@ Tant que le nombre de tâches est en dessous du nombre de coeur, le temps d'exé
 
 On exécute la fonction précédente d'abord sans, puis avec protection par le mutex.
 
-`./qc 100000 10 3 1`
+`./td2/qc 100000 10 3 1`
 
 ```
 final counter value: 426251.000000
@@ -141,7 +146,7 @@ final counter value: 310632.000000
 100000 10 1.762000
 ```
 
-`./qc 100000 10 3 1`
+`./td2/qc 100000 10 3 1`
 
 ```
 final counter value: 1000000.000000
