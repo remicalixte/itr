@@ -242,7 +242,7 @@ final semaphore counter value: 24
 
 ### d) Classe Fifo
 
-La classe template `Fifo` est une file générique à accès concurrent qui support les méthodes `push` et `pop`. Elle est implémentée à l'aide d'une clase de la bibliothèque standard du C++: `std::queue`. Son accès est protégé par un mutex. `push` ajouter un élément à la fin de la file. `pop` extrait à l'élément au début de la file ou utilise `wait` du mutex si la file est vide. `push` appelle également `notify` pour réveiller un éventuel thread mis en pause.
+La classe template `Fifo` est une file générique à accès concurrent qui support les méthodes `push` et `pop`. Elle est implémentée à l'aide d'une clase de la bibliothèque standard du C++: `std::queue`. Son accès est protégé par un mutex. `push` ajoute un élément à la fin de la file. `pop` extrait à l'élément au début de la file ou utilise `wait` du mutex si la file est vide. `push` appelle également `notify` pour réveiller un éventuel thread mis en pause.
 
 On peut la tester avec `./td4/qd`.
 
